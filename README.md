@@ -288,12 +288,10 @@ http://localhost:8080/swagger-ui/index.html
 *Futuro Ingeniero en Sistemas de Información*
 
 * GitHub: [https://github.com/Yafar12](https://github.com/Yafar12)
-* Email: *agregar email de contacto*
+* Email: [https://gmail.com](https://mail.google.com/mail/u/0/#inbox?compose=CllgCJlKnffbmdVQQMGKWwxHWzBXbfknnxScWqrGPccGQrMptCzbrHVTLWxHWCglpcVwHmspMqB)
 
 ---
 
 ## 📜 Licencia
 
 © 2025 Alejandro Ahmad. Todos los derechos reservados.
-
-> Si preferís una licencia abierta (MIT/Apache-2.0), puedo generar el archivo `LICENSE` y actualizar este apartado.
