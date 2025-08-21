@@ -32,27 +32,32 @@ public class DoctorController {
     private DoctorService service;
 
     @GetMapping
-    public ResponseEntity<List<DoctorResponse>> findAll(){
-        return ResponseEntity.ok().body(service.findAll());
+    public ResponseEntity<List<DoctorResponse>> findAll() {
+        List<DoctorResponse> doctors = service.findAll();
+        if (doctors.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(doctors);
     }
 
     @GetMapping("/{DNI}")
-    public ResponseEntity<DoctorResponse> findById(@PathVariable("DNI") Long id){
+    public ResponseEntity<DoctorResponse> findById(@PathVariable("DNI") Long id) {
         return ResponseEntity.ok().body(service.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<DoctorResponse> create(@Valid @RequestBody DoctorCreateRequest request){
+    public ResponseEntity<DoctorResponse> create(@Valid @RequestBody DoctorCreateRequest request) {
         return ResponseEntity.status(201).body(service.create(request));
     }
 
     @PutMapping("/{DNI}")
-    public ResponseEntity<DoctorResponse> update(@PathVariable("DNI") Long id,@Valid @RequestBody DoctorUpdateRequest request){
+    public ResponseEntity<DoctorResponse> update(@PathVariable("DNI") Long id,
+            @Valid @RequestBody DoctorUpdateRequest request) {
         return ResponseEntity.ok().body(service.update(id, request));
     }
 
     @DeleteMapping("/{DNI}")
-    public ResponseEntity<Void> delete(@PathVariable("DNI") Long id){
+    public ResponseEntity<Void> delete(@PathVariable("DNI") Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

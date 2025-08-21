@@ -5,11 +5,11 @@ import java.util.List;
 public interface IModelService<R,ID, Q,U> {
     List<R> findAll();
 
-    R findById(Long ID);
+    R findById(ID id);
 
     R create(Q request);
 
-    R update(Long ID, U request);
+    R update(ID id, U request);
 
-    void delete(Long ID);
+    void delete(ID id);
 }

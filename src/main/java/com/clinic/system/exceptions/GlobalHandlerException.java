@@ -1,6 +1,7 @@
 package com.clinic.system.exceptions;
 
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,6 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import com.clinic.system.model.Specialty;
+
+import jakarta.validation.ConstraintViolationException;
 
 @RestControllerAdvice
 public class GlobalHandlerException {
@@ -38,25 +43,52 @@ public class GlobalHandlerException {
                 .collect(Collectors.toList());
 
         var body = new ErrorResponse(
-            Instant.now(),
-            HttpStatus.BAD_REQUEST.value(), 
-            HttpStatus.BAD_REQUEST.getReasonPhrase(), 
-            "Datos invalidos", 
-            violations);
-        
+                Instant.now(),
+                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                "Datos invalidos",
+                violations);
+
         return ResponseEntity.badRequest().body(body);
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<ErrorResponse> handleDataIntegrity(DataIntegrityViolationException ex){
+    public ResponseEntity<ErrorResponse> handleDataIntegrity(DataIntegrityViolationException ex) {
         var status = HttpStatus.CONFLICT;
         var body = new ErrorResponse(
-            Instant.now(),
-            status.value(), 
-            status.getReasonPhrase(), 
-            "Violacion de integridad de datos", 
-            List.of());
+                Instant.now(),
+                status.value(),
+                status.getReasonPhrase(),
+                "Violacion de integridad de datos",
+                List.of());
 
-        return ResponseEntity.status(status).body(body);    
+        return ResponseEntity.status(status).body(body);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponse> badEnum(IllegalArgumentException ex){
+        String allowed = Arrays.stream(Specialty.values()).map(Enum::name).collect(Collectors.joining(", "));
+        var body = new ErrorResponse(
+            Instant.now(), 
+            HttpStatus.BAD_REQUEST.value(), 
+            HttpStatus.BAD_REQUEST.getReasonPhrase(), 
+            allowed, 
+            null);
+        return ResponseEntity.badRequest().body(body);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ErrorResponse> handleConstraintViolation(ConstraintViolationException ex){
+        var violations = ex.getConstraintViolations().stream().map(v -> new FieldViolation(
+            v.getPropertyPath() != null ?  v.getPropertyPath().toString() : "unknown", 
+            v.getMessage(), 
+            v.getInvalidValue())).collect(Collectors.toList());
+        var body = new ErrorResponse(
+            Instant.now(), 
+            HttpStatus.BAD_REQUEST.value(), 
+            HttpStatus.BAD_REQUEST.getReasonPhrase(), 
+            "Datos invalidos.", 
+            violations);
+        return ResponseEntity.badRequest().body(body);    
     }
 }

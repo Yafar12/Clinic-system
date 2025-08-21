@@ -4,10 +4,11 @@ import java.util.List;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import com.clinic.system.dto.patient.PatientMapper;
+import com.clinic.system.dto.mapper.PatientMapper;
 import com.clinic.system.dto.patient.PatientCreateRequest;
 import com.clinic.system.dto.patient.PatientResponse;
 import com.clinic.system.dto.patient.PatientUpdateRequest;
@@ -24,6 +25,7 @@ public class PatientService
     @Autowired
     private IPatientRepository repo;
     @Autowired
+    @Qualifier("patientMapperV1Impl")
     private PatientMapper mapper;
 
     @Override

@@ -17,13 +17,13 @@ import lombok.Data;
 @Entity
 @Table(name = "non_working_blocks")
 @Data
-public class NonWorkingDays {
+public class NonWorkingDay {
 
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
   @ManyToOne(optional = false)
-  @JoinColumn(name = "doctor_id", nullable = false)
+  @JoinColumn(name = "dni", nullable = false)
   private Doctor doctor;
 
   @Column(nullable = false)

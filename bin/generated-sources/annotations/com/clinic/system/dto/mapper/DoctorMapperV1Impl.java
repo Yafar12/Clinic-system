@@ -1,17 +1,19 @@
-package com.clinic.system.dto.doctor;
+package com.clinic.system.dto.mapper;
 
-import com.clinic.system.dto.mapper.DoctorMapper;
+import com.clinic.system.dto.doctor.DoctorCreateRequest;
+import com.clinic.system.dto.doctor.DoctorResponse;
+import com.clinic.system.dto.doctor.DoctorUpdateRequest;
 import com.clinic.system.model.Doctor;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-08-20T11:49:41-0300",
+    date = "2025-08-21T07:59:30-0300",
     comments = "version: 1.5.4.Final, compiler: Eclipse JDT (IDE) 3.42.50.v20250729-0351, environment: Java 21.0.8 (Eclipse Adoptium)"
 )
 @Component
-public class DoctorMapperImpl implements DoctorMapper {
+public class DoctorMapperV1Impl implements DoctorMapper {
 
     @Override
     public DoctorResponse toResponse(Doctor entity) {
