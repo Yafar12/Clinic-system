@@ -1,16 +1,10 @@
-# Compiled class file
+# ===== Compilados / logs =====
 *.class
-
-# Log file
 *.log
+hs_err_pid*
+replay_pid*
 
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
+# ===== Paquetes / artefactos (no versionar) =====
 *.jar
 *.war
 *.nar
@@ -19,6 +13,49 @@
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-replay_pid*
+# ===== Carpetas de build =====
+.gradle/
+build/
+bin/
+out/
+target/
+
+# ===== Gradle wrapper (¡sí versionar!) =====
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
+
+# ===== Maven wrapper (si usás Maven en algún módulo) =====
+!.mvn/wrapper/maven-wrapper.jar
+!.mvn/wrapper/maven-wrapper.properties
+
+# ===== IDEs =====
+.idea/
+*.iml
+.vscode/
+.project
+.classpath
+.settings/
+.springBeans
+.apt_generated/
+.factorypath
+
+# ===== Sistema operativo =====
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ===== Spring / env (opcional, para secretos locales) =====
+application-local.properties
+application-local.yml
+.env
+.env.*
+*.env
+
+# ===== Bases de datos locales (opcional) =====
+*.h2.db
+*.mv.db
+*.db
+
+# ===== Frontend (si llegás a tenerlo) =====
+node_modules/
+dist/
