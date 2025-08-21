@@ -1,5 +1,6 @@
 package com.clinic.system.dto.mapper.helpers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.clinic.system.exceptions.AppException;
 import com.clinic.system.model.Doctor;
@@ -7,11 +8,9 @@ import com.clinic.system.repository.IDoctorRepository;
 
 @Component
 public class DoctorRefMapper {
-    private final IDoctorRepository doctorRepo;
-
-    public DoctorRefMapper(IDoctorRepository doctorRepo) {
-        this.doctorRepo = doctorRepo;
-    }
+    
+    @Autowired
+    private IDoctorRepository doctorRepo;
 
     public Doctor fromDni(Long dni) {
         if (dni == null)

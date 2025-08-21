@@ -1,24 +1,45 @@
 package com.clinic.system.dto.mapper;
 
-import org.mapstruct.BeanMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
-
 import com.clinic.system.dto.patient.PatientCreateRequest;
 import com.clinic.system.dto.patient.PatientResponse;
 import com.clinic.system.dto.patient.PatientUpdateRequest;
 import com.clinic.system.model.Patient;
 
-@Mapper(componentModel = "spring", implementationName = "PatientMapperV1Impl")
-public interface PatientMapper {
+public class PatientMapper {
 
-    PatientResponse toResponse(Patient entity);
+    public PatientResponse toResponse(Patient entity) {
+        if (entity == null)
+            return null;
+        return new PatientResponse(
+                entity.getPatientId(),
+                entity.getName(),
+                entity.getLastName(),
+                entity.getEmail(),
+                entity.getPhone());
+    }
 
-    Patient toEntity(PatientCreateRequest dto);
+    public Patient toEntity(PatientCreateRequest dto){
+        if(dto == null) return null;
+        Patient pat = new Patient();
+        pat.setEmail(dto.email());
+        pat.setPhone(dto.phone());
+        pat.setLastName(dto.lastName());
+        pat.setName(dto.name());
+        pat.setPatientId(dto.patientId());
 
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "patientId", ignore = true)
-    void update(@MappingTarget Patient entity, PatientUpdateRequest dto);
+        return pat;
+    }
+
+    public void update(Patient target, PatientUpdateRequest dto){
+        if(target == null || dto == null) return;
+
+        if(hasText(dto.name())) target.getName();
+        if(hasText(dto.lastName()))  target.getLastName();
+        if(hasText(dto.email())) target.getEmail();
+        if(hasText(dto.phone())) target.getPhone();
+    }
+
+    private static boolean hasText(String s){
+        return s != null && !s.isEmpty();
+    }
 }

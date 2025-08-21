@@ -1,30 +1,54 @@
 package com.clinic.system.dto.mapper;
 
-import org.mapstruct.BeanMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.springframework.stereotype.Component;
 
 import com.clinic.system.dto.doctor.DoctorCreateRequest;
 import com.clinic.system.dto.doctor.DoctorResponse;
 import com.clinic.system.dto.doctor.DoctorUpdateRequest;
 import com.clinic.system.model.Doctor;
 
-@Mapper(
-    componentModel = "spring",
-    implementationName = "DoctorMapperV1Impl"
-)
-public interface DoctorMapper {
+@Component
+public class DoctorMapper {
 
-    @Mapping(source = "specialty", target = "specialty")
-    DoctorResponse toResponse(Doctor entity);
+    public DoctorResponse toResponse(Doctor entity) {
+        if (entity == null)
+            return null;
+        return new DoctorResponse(
+                entity.getDni(),
+                entity.getFullName(),
+                entity.getLicenseNumber(),
+                entity.getEmail(),
+                entity.getPhone(),
+                entity.getSpecialty().name());
+    }
 
-    @Mapping(source = "specialty", target = "specialty")
-    Doctor toEntity(DoctorCreateRequest dto);
+    public Doctor toEntity(DoctorCreateRequest dto) {
+        if (dto == null)
+            return null;
+        Doctor doc = new Doctor();
+        doc.setDni(dto.dni());
+        doc.setFullName(dto.fullName());
+        doc.setLicenseNumber(dto.licenseNumber());
+        doc.setSpecialty(dto.specialty());
+        doc.setEmail(dto.email());
+        doc.setPhone(dto.phone());
+        return doc;
+    }
 
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "dni", ignore = true)
-    @Mapping(target = "licenseNumber", ignore = true)
-    void update(@MappingTarget Doctor entity, DoctorUpdateRequest dto);
+    public void update(Doctor target, DoctorUpdateRequest dto) {
+        if (target == null || dto == null)
+            return;
+        if (hasText(dto.fullName()))
+            target.setFullName(dto.fullName());
+        if (hasText(dto.email()))
+            target.setEmail(dto.email().trim());
+        if (hasText(dto.phone()))
+            target.setPhone(dto.phone().trim());
+        if (hasText(dto.specialty().name()))
+            target.setSpecialty(dto.specialty());
+    }
+
+    private static boolean hasText(String s) {
+        return s != null && !s.isEmpty();
+    }
 }

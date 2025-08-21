@@ -1,31 +1,65 @@
 package com.clinic.system.dto.mapper;
 
-import org.mapstruct.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.clinic.system.dto.mapper.helpers.DoctorRefMapper;
 import com.clinic.system.dto.nonWorkingDay.NonWorkingCreateRequest;
 import com.clinic.system.dto.nonWorkingDay.NonWorkingResponse;
 import com.clinic.system.dto.nonWorkingDay.NonWorkingUpdateRequest;
+import com.clinic.system.exceptions.AppException;
 import com.clinic.system.model.NonWorkingDay;
 
-@Mapper(
-    componentModel = "spring",
-    uses = DoctorRefMapper.class
-)
-public interface NonWorkingDayMapper {
+import java.time.LocalTime;
 
-    @Mapping(source = "doctor", target = "dni")
-    NonWorkingResponse toResponse(NonWorkingDay entity);
+@Component
+public class NonWorkingDayMapper {
 
-    @Mapping(source = "dni", target = "doctor")
-    @Mapping(target = "id", ignore = true)
-    NonWorkingDay toEntity(NonWorkingCreateRequest dto);
+        @Autowired
+        private DoctorRefMapper doctorRef;
 
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "doctor", ignore = true)
-    @Mapping(target = "date", ignore = true)
-    @Mapping(target = "startTime", ignore = true)
-    @Mapping(target = "endTime", ignore = true)
-    void updateReason(@MappingTarget NonWorkingDay entity, NonWorkingUpdateRequest dto);
+        public NonWorkingResponse toResponse(NonWorkingDay entity) {
+                if (entity == null)
+                        return null;
+                return new NonWorkingResponse(
+                                entity.getId(),
+                                doctorRef.toDni(entity.getDoctor()),
+                                entity.getDate(),
+                                entity.getStartTime(),
+                                entity.getEndTime(),
+                                entity.getReason());
+        }
+
+        public NonWorkingDay toEntity(NonWorkingCreateRequest dto) {
+                if (dto == null)
+                        return null;
+
+                validateRange(dto.startTime(), dto.endTime());
+
+                NonWorkingDay nwd = new NonWorkingDay();
+                nwd.setDoctor(doctorRef.fromDni(dto.dni()));
+                nwd.setDate(dto.date());
+                nwd.setStartTime(dto.startTime());
+                nwd.setEndTime(dto.endTime());
+                nwd.setReason(hasText(dto.reason()) ? dto.reason() : null);
+                return nwd;
+        }
+
+        public void updateReason(NonWorkingDay target, NonWorkingUpdateRequest dto) {
+                if (target == null || dto == null)
+                        return;
+                if (dto.reason() != null) {
+                        target.setReason(hasText(dto.reason()) ? dto.reason() : null);
+                }
+        }
+
+        private static void validateRange(LocalTime start, LocalTime end) {
+                if (start != null && end != null && start.isAfter(end)) {
+                        throw AppException.badRequest("startTime no puede ser posterior a endTime");
+                }
+        }
+
+        private static boolean hasText(String s) {
+                return s != null && !s.isEmpty();
+        }
 }
