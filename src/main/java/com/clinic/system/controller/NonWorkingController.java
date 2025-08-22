@@ -24,11 +24,27 @@ public class NonWorkingController {
     @Autowired
     private NonWorkingDayService service;
 
-    @GetMapping("/{DNI}")
-    public ResponseEntity<List<NonWorkingResponse>> findByDoctor(@PathVariable("DNI") Long id, @RequestParam LocalDate date){
+    @GetMapping
+    public ResponseEntity<List<NonWorkingResponse>> findAll() {
+        List<NonWorkingResponse> res = service.findAll();
+        if (res.isEmpty())
+            return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().body(res);
+
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<NonWorkingResponse> findById(@PathVariable("id") Integer id) {
+        return ResponseEntity.ok().body(service.findById(id));
+    }
+
+    @GetMapping("/{DNI}/doctors")
+    public ResponseEntity<List<NonWorkingResponse>> findByDoctor(@PathVariable("DNI") Long id,
+            @RequestParam("date") LocalDate date) {
         List<NonWorkingResponse> res = service.listByDoctorAndDate(id, date);
 
-        if(res.isEmpty()) return ResponseEntity.noContent().build();
+        if (res.isEmpty())
+            return ResponseEntity.noContent().build();
 
         return ResponseEntity.ok(res);
     }

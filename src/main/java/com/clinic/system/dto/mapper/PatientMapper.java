@@ -1,10 +1,13 @@
 package com.clinic.system.dto.mapper;
 
+import org.springframework.stereotype.Component;
+
 import com.clinic.system.dto.patient.PatientCreateRequest;
 import com.clinic.system.dto.patient.PatientResponse;
 import com.clinic.system.dto.patient.PatientUpdateRequest;
 import com.clinic.system.model.Patient;
 
+@Component
 public class PatientMapper {
 
     public PatientResponse toResponse(Patient entity) {
@@ -18,8 +21,9 @@ public class PatientMapper {
                 entity.getPhone());
     }
 
-    public Patient toEntity(PatientCreateRequest dto){
-        if(dto == null) return null;
+    public Patient toEntity(PatientCreateRequest dto) {
+        if (dto == null)
+            return null;
         Patient pat = new Patient();
         pat.setEmail(dto.email());
         pat.setPhone(dto.phone());
@@ -30,16 +34,21 @@ public class PatientMapper {
         return pat;
     }
 
-    public void update(Patient target, PatientUpdateRequest dto){
-        if(target == null || dto == null) return;
+    public void update(Patient target, PatientUpdateRequest dto) {
+        if (target == null || dto == null)
+            return;
 
-        if(hasText(dto.name())) target.getName();
-        if(hasText(dto.lastName()))  target.getLastName();
-        if(hasText(dto.email())) target.getEmail();
-        if(hasText(dto.phone())) target.getPhone();
+        if (hasText(dto.name()))
+            target.getName();
+        if (hasText(dto.lastName()))
+            target.getLastName();
+        if (hasText(dto.email()))
+            target.getEmail();
+        if (hasText(dto.phone()))
+            target.getPhone();
     }
 
-    private static boolean hasText(String s){
+    private static boolean hasText(String s) {
         return s != null && !s.isEmpty();
     }
 }

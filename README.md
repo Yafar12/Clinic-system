@@ -61,7 +61,7 @@ erDiagram
       STRING email
       STRING phone
     }
-    APPOINTMENT {
+    SCHEDULE {
       INT id PK
       DATE date
       TIME time
@@ -75,8 +75,8 @@ erDiagram
       STRING reason
     }
 
-    DOCTOR ||--o{ APPOINTMENT : atiende
-    PATIENT ||--o{ APPOINTMENT : tiene
+    DOCTOR ||--o{ SCHEDULE : atiende
+    PATIENT ||--o{ SCHEDULE : tiene
     DOCTOR ||--o{ NON_WORKING_DAY : bloquea
 ```
 
@@ -87,10 +87,10 @@ erDiagram
 ```text
 Clinic-system/
 └─ system/                      # módulo backend
-   ├─ src/main/java/com/clinic/system/
+   |- src/main/java/com/clinic/system/
    │  ├─ controllers/           # REST Controllers
    │  ├─ dto/
-   │  │  ├─ doctor/ patient/ appointment/ nonWorkingDay/
+   │  │  ├─ doctor/ patient/ schedule/ nonWorkingDay/
    │  │  └─ mapper/             # mappers manuales
    │  ├─ exceptions/            # AppException + handler global
    │  ├─ helpers/               # helpers (e.g., DoctorRefMapper)
@@ -274,8 +274,8 @@ http://localhost:8080/swagger-ui/index.html
 
 ## 📅 Roadmap
 
-* [ ] Endpoints de Appointment completos
-* [ ] Paginación y filtros avanzados
+* [ ] Endpoints de Schedule completos
+* [  ] Paginación y filtros avanzados
 * [ ] Integración con Auth (JWT)
 * [ ] Tests unitarios / integración
 * [ ] Dockerfile multi-stage
@@ -288,7 +288,7 @@ http://localhost:8080/swagger-ui/index.html
 *Futuro Ingeniero en Sistemas de Información*
 
 * GitHub: [https://github.com/Yafar12](https://github.com/Yafar12)
-* Email: [https://gmail.com](https://mail.google.com/mail/u/0/#inbox?compose=CllgCJlKnffbmdVQQMGKWwxHWzBXbfknnxScWqrGPccGQrMptCzbrHVTLWxHWCglpcVwHmspMqB)
+* Email: [yafarahmad72@gmail.com](https://mail.google.com/mail/u/0/#inbox?compose=CllgCJlKnffbmdVQQMGKWwxHWzBXbfknnxScWqrGPccGQrMptCzbrHVTLWxHWCglpcVwHmspMqB)
 
 ---
 

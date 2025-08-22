@@ -3,7 +3,6 @@ package com.clinic.system.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.clinic.system.dto.doctor.DoctorCreateRequest;
@@ -21,7 +20,6 @@ public class DoctorService implements IModelService<DoctorResponse, Long, Doctor
     private IDoctorRepository repo;
 
     @Autowired
-    @Qualifier("doctorMapperV1Impl")
     private DoctorMapper mapper;
 
     @Override
