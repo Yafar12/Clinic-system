@@ -1,4 +1,4 @@
-package com.clinic.system.infrastructure.adapters.input.rest;
+package com.clinic.system.infrastructure.adapters.input;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
