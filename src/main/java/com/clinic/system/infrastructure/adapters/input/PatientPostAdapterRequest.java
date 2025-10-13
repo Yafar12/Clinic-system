@@ -1,5 +1,9 @@
 package com.clinic.system.infrastructure.adapters.input;
 
+import java.util.UUID;
+
+import org.springframework.web.multipart.MultipartFile;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -12,18 +16,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PatientPostAdapterRequest {
 
-    @NotBlank(message = "must not be null")
     private String uuid;
-
-    @NotBlank(message = "must not be null")
-    @Size(min = 2, max = 50)
     private String name;
-
-    @Email
-    @NotBlank(message = "must not be null")
-    private String email;
-
-    @Size(min = 7, max = 20)
-    private String phone;
+    private String lastname;
+    private MultipartFile foto;
 
 }

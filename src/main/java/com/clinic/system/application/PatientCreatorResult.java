@@ -1,5 +1,7 @@
 package com.clinic.system.application;
 
+import java.util.UUID;
+
 import lombok.Builder;
 import lombok.Value;
 
@@ -7,5 +9,5 @@ import lombok.Value;
 @Builder
 public class PatientCreatorResult {
 
-    private String uuid;
+    private UUID uuid;
 }

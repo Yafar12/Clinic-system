@@ -1,13 +1,13 @@
 package com.clinic.system.infrastructure.adapters.input;
 
-import lombok.AllArgsConstructor;
+import java.util.UUID;
+
+import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Builder
 public class PatientPostAdapterResponse {
-    private String uuid;
+    private UUID uuid;
 
 }
