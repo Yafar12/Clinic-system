@@ -1,12 +1,7 @@
 package com.clinic.system.infrastructure.adapters.input;
 
-import java.util.UUID;
-
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
