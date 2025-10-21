@@ -32,7 +32,7 @@ public class PatientCreatorUseCase {
 
             return PatientCreatorResult.builder().uuid(saved.getUuid()).build();
         } catch (Exception e) {
-            throw new RuntimeException("Error creando patient", e);
+            throw new RuntimeException("Error creando paciente", e);
         }
     }
 }

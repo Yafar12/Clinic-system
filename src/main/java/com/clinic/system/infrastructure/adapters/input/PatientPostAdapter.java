@@ -33,13 +33,6 @@ public class PatientPostAdapter {
         req.setName(name);
         req.setFoto(photo);
 
-        byte[] fotoBytes = null;
-        String filename = null;
-        if (photo != null && !photo.isEmpty()) {
-            fotoBytes = photo.getBytes();
-            filename = photo.getOriginalFilename();
-        }
-
         PatientCreatorCommand command = adapterMapper.toCommand(req);
         PatientCreatorResult result = useCase.perform(command);
 
