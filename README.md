@@ -1,77 +1,147 @@
-# 🏥 Clinic Management System — Fullstack Enterprise Solution
+# 🏥 Clinic Management System  
+### Fullstack Enterprise Healthcare Platform
 
-![Java](https://img.shields.io/badge/Java-17%2B-red?logo=java) ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.1-6DB33F?logo=springboot&logoColor=white) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-336791?logo=postgresql&logoColor=white) ![React](https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB) ![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white)
+Un **sistema integral de gestión clínica**, diseñado con enfoque **enterprise-grade**, priorizando **escalabilidad, mantenibilidad y desacoplamiento real**.  
+El proyecto aplica **Arquitectura Hexagonal (Ports & Adapters)** en el backend y una **UI moderna de alto rendimiento** en React.
 
-Este es un ecosistema de gestión clínica de alto rendimiento diseñado bajo estándares de ingeniería de software modernos. El backend implementa **Arquitectura Hexagonal (Ports & Adapters)** para garantizar un desacoplamiento total y máxima testabilidad, mientras que el frontend utiliza **Vite + React** para una experiencia de usuario fluida y reactiva.
-
----
-
-## 🚀 Stack Tecnológico Profesional
-
-### **Backend (The Core)**
-* **Engine:** Java 17+ con Spring Boot 3.4.1.
-* **Architecture:** Hexagonal (Ports & Adapters) para aislamiento de reglas de negocio.
-* **Persistence:** Spring Data JPA + Hibernate con PostgreSQL 17.
-* **Mapping:** MapStruct para transformaciones seguras entre capas (DTOs, Commands, Entities).
-* **Validation:** Jakarta Validation para integridad de datos.
-* **Documentation:** OpenAPI / Swagger UI.
-
-### **Frontend (The UI)**
-* **Framework:** React con **Vite** para un desarrollo ultrarrápido.
-* **Paradigm:** Integración **MERN** (MongoDB, Express, React, Node) para módulos específicos de alta concurrencia o logs no relacionales.
-* **Styling:** Componentes modernos y optimizados para entornos médicos.
+> 📌 **Objetivo del proyecto:** demostrar dominio de **arquitectura limpia**, **diseño orientado al dominio (DDD)** y **buenas prácticas profesionales** aplicadas a un sistema real del sector salud.
 
 ---
 
-## 🧱 Arquitectura Hexagonal y Organización
+## 🧠 Arquitectura — Clean, Hexagonal & Scalable
 
-El proyecto sigue una estructura de carpetas estricta para mantener la pureza del dominio:
+El backend está diseñado para **proteger el dominio** de cualquier cambio tecnológico, garantizando independencia de frameworks, bases de datos y UI.
 
-```text
-src/main/java/com/project/project/
-├── application/             # Capa de Aplicación (Orquestación)
-│   ├── dto/                 # Commands y Results (Data transfer)
-│   ├── mapper/              # Mapeo Aplicación ↔ Dominio
-│   ├── useCase/             # Implementación de lógica de negocio (Servicios)
-│   ├── GuestCreator.java    # Input Port (Interface)
-│   └── GuestFindAll.java    # Input Port (Interface)
-├── domain/                  # Corazón del Sistema (Reglas puras)
-│   ├── model/               # Entidades de negocio (POJOs)
-│   └── port/                # Output Ports (Interfaces para persistencia/externos)
-├── infrastructure/          # Detalles de Implementación (Frameworks)
-│   ├── input/               # Adaptadores de Entrada (REST, Swagger)
-│   └── output/              # Adaptadores de Salida (JPA Repository, File Storage)
-└── shared/                  # Módulos Transversales
-    ├── config/              # Configuraciones de Bean y Swagger
-    └── error/               # Manejo Global de Excepciones y Códigos de Error
+```mermaid
+graph TD
+    subgraph "Infrastructure"
+        UI[REST Controllers / Swagger]
+        DB[(PostgreSQL 17)]
+        FS[File System / External Storage]
+    end
 
+    subgraph "Application"
+        UC[Use Cases / Application Services]
+        IP[Input Ports]
+        OP[Output Ports]
+    end
 
+    subgraph "Domain"
+        DM[Domain Models]
+        BR[Business Rules]
+    end
+
+    UI --> IP
+    UC --> IP
+    UC --> OP
+    OP --> DB
+    OP --> FS
+    UC --> DM
 ```
-📌 Entidades y Roadmap del Sistema
-El sistema está diseñado para escalar hacia una solución integral de salud:
 
-👥 Gestión Integral: Pacientes, Doctores y Personal Administrativo (Secretarios).
+✔ Beneficios clave
 
-📅 Agenda Inteligente: Sistema de turnos con validación de disponibilidad en tiempo real.
+• Dominio 100 % independiente
 
-🛑 Non-Working Days: Módulo avanzado para que médicos gestionen licencias, feriados y bloqueos horarios personalizados (Días libres y franjas horarias).
+• Testing de casos de uso sin frameworks
 
-📂 Historia Clínica Digital: Almacenamiento seguro de registros médicos y archivos adjuntos.
+• Sustitución de DB / UI sin impacto en negocio
 
-🔐 Seguridad: Implementación de JWT (JSON Web Tokens) para control de acceso basado en roles.
+• Escalabilidad y evolución a largo plazo
 
-⚙️ Configuración del Entorno
-Requisitos
-JDK 17 o superior.
 
-Maven 3.9+.
+#📊 Modelo de Dominio (UML)
 
-PostgreSQL 17 activo.
+##Relación entre las entidades principales del sistema clínico:
+```mermaid
+classDiagram
+    class Patient {
+        +UUID id
+        +String firstName
+        +String lastName
+        +String historyId
+    }
 
-Configuración de Base de Datos
-Actualiza tu archivo src/main/resources/application.properties:
+    class Doctor {
+        +UUID id
+        +String licenseNumber
+        +String specialty
+        +List~NonWorkingDay~ agenda
+    }
 
-Properties
+    class Appointment {
+        +LocalDateTime dateTime
+        +String status
+        +attend(Patient)
+    }
+
+    class NonWorkingDay {
+        +LocalDate date
+        +LocalTime startTime
+        +LocalTime endTime
+        +String reason
+    }
+
+    Doctor "1" -- "0..*" Appointment : manages
+    Patient "1" -- "0..*" Appointment : requests
+    Doctor "1" -- "0..*" NonWorkingDay : blocks
+```
+
+| Layer            | Technologies                       | Purpose                      |
+| ---------------- | ---------------------------------- | ---------------------------- |
+| **Backend**      | Java 17+, Spring Boot 3.4          | REST API & Application Core  |
+| **Persistence**  | JPA, Hibernate, PostgreSQL 17      | Relational data integrity    |
+| **Frontend**     | React 18, Vite                     | High-performance UI          |
+| **Architecture** | Hexagonal, Clean Architecture, DDD | Enterprise design            |
+| **Tooling**      | MapStruct, Lombok, Swagger         | Productivity & documentation |
+
+
+#🧱 Project Structure (Hexagonal)
+
+src/main/java/com/project/project/
+├── application/          # Use cases & orchestration
+│   ├── dto/              # Commands / Results
+│   ├── mapper/           # Application ↔ Domain mapping
+│   └── useCase/          # Business workflows
+├── domain/               # Pure business logic
+│   ├── model/            # Domain entities
+│   └── port/             # Input / Output ports
+├── infrastructure/       # Frameworks & adapters
+│   ├── input/            # REST controllers
+│   └── output/           # JPA repositories, DB, external systems
+└── shared/               # Cross-cutting concerns
+
+
+#💡 Key Features
+##✅ Implemented
+
+Smart Appointment Scheduling
+Prevents overlapping appointments automatically.
+
+Non-Working Days Management
+Doctors can block full days or specific time ranges.
+
+Digital Medical Records
+Patient history with file attachments.
+
+Clean Separation of Concerns
+Strict architectural boundaries enforced.
+
+##🚧 In Progress
+
+Enterprise Security
+JWT authentication + Role-Based Access Control (RBAC).
+
+#⚙️ Configuration & Run
+##🔧 Requirements
+
+• Java JDK 17+
+
+• Maven 3.9+
+
+• PostgreSQL 17
+
+#🗄️ Database Configuration
 
 spring.datasource.url=jdbc:postgresql://localhost:5432/postgres?currentSchema=public
 spring.datasource.username=postgres
@@ -80,11 +150,19 @@ spring.datasource.password=postgres
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 
-👤 Autor
-Alejandro Ahmad Futuro Ingeniero en Sistemas de Información
+#▶️ Run Application
 
-GitHub: Yafar12
+mvn clean install
+mvn spring-boot:run
 
-Email: yafarahmad72@gmail.com
+#👨‍💻 Author
 
-© 2025 Clinic Management System. Desarrollo profesional orientado a la excelencia técnica.
+##Alejandro Ahmad
+##Future Information Systems Engineer
+
+##📩 Email: yafarahmad72@gmail.com
+
+##🐙 GitHub: https://github.com/Yafar12
+
+© 2025 Clinic Management System
+Professional software engineering applied to healthcare
