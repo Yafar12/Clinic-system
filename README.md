@@ -73,21 +73,22 @@ graph TD
     Patient "1" -- "0..*" Appointment : requests
     Doctor "1" -- "0..*" NonWorkingDay : blocks
     
-🚀 Tech Stack
+## 🚀 Tech Stack
 
+| Layer | Technologies | Purpose |
+|------|-------------|--------|
+| **Backend** | Java 17+, Spring Boot 3.4 | REST API & Application Core |
+| **Persistence** | JPA, Hibernate, PostgreSQL 17 | Relational data integrity |
+| **Frontend** | React 18, Vite | High-performance UI |
+| **Architecture** | Hexagonal, Clean Architecture, DDD | Enterprise design |
+| **Tooling** | MapStruct, Lombok, Swagger | Productivity & documentation |
 
-| Layer            | Technologies                       | Purpose                      |
-| ---------------- | ---------------------------------- | ---------------------------- |
-| **Backend**      | Java 17+, Spring Boot 3.4          | REST API & Application Core  |
-| **Persistence**  | JPA, Hibernate, PostgreSQL 17      | Relational data integrity    |
-| **Frontend**     | React 18, Vite                     | High-performance UI          |
-| **Architecture** | Hexagonal, Clean Architecture, DDD | Enterprise design            |
-| **Tooling**      | MapStruct, Lombok, Swagger         | Productivity & documentation |
+---
 
+## 🧱 Project Structure (Hexagonal)
 
-🧱 Project Structure (Hexagonal)
-
-
+```bash
+src/main/java/com/project/project/
 ├── application/          # Casos de uso y orquestación
 │   ├── dto/              # Commands / Results
 │   ├── mapper/           # Mapeo Aplicación ↔ Dominio
@@ -101,32 +102,59 @@ graph TD
 │   ├── input/            # Controladores REST (Input Adapters)
 │   └── output/           # Repositorios JPA y storage (Output Adapters)
 └── shared/               # Recursos transversales (Configuración, Errores)
+```
 
 
-💡 Funcionalidades Clave✅ 
+## 💡 Funcionalidades Clave
 
-ImplementadasSmart Appointment Scheduling: Previene automáticamente el solapamiento de citas.
-Non-Working Days Management: Gestión de bloqueos de agenda por médicos.
-Digital Medical Records: Historial de pacientes con soporte para archivos.
-Global Exception Handling: Manejo centralizado de errores con códigos de dominio.
-Enterprise Security: Autenticación JWT + Role-Based Access Control (RBAC).
+### ✅ Implementadas
+- **Smart Appointment Scheduling**  
+  Previene automáticamente el solapamiento de citas.
+- **Non-Working Days Management**  
+  Gestión de bloqueos de agenda por médicos.
+- **Digital Medical Records**  
+  Historial de pacientes con soporte para archivos.
+- **Global Exception Handling**  
+  Manejo centralizado de errores con códigos de dominio.
+- **Enterprise Security**  
+  Autenticación JWT + Role-Based Access Control (RBAC).
 
-🚧 En Progreso
+### 🚧 En Progreso
+- Mejoras de seguridad y hardening del sistema.
+- Auditoría y trazabilidad de acciones.
 
-⚙️ Configuración y Ejecución
-🗄️ Base de DatosConfigura 
+---
 
-src/main/resources/application.properties:Propertiesspring.datasource.url=jdbc:postgresql://localhost:5432/postgres?currentSchema=public
+## ⚙️ Configuración y Ejecución
+
+### 🗄️ Base de Datos
+
+Configurar el archivo `src/main/resources/application.properties`:
+
+```properties
+spring.datasource.url=jdbc:postgresql://localhost:5432/postgres?currentSchema=public
 spring.datasource.username=postgres
 spring.datasource.password=postgres
 spring.jpa.hibernate.ddl-auto=update
+```
 
-▶️ Correr AplicaciónBashmvn
+### ▶️ Correr Aplicación
 
-clean install
+```bash
+mvn clean install
 mvn spring-boot:run
-👨‍💻 Autor
-Alejandro Ahmad Futuro Ingeniero en Sistemas de Información
-📩 Email: yafarahmad72@gmail.com
-🐙 GitHub: Yafar12© 2025 Clinic Management System
-Professional software engineering applied to healthcare.
+```
+
+## 👨‍💻 Autor
+
+**Alejandro Ahmad**  
+_Futuro Ingeniero en Sistemas de Información_
+
+📩 **Email:** [yafarahmad72@gmail.com](mailto:yafarahmad72@gmail.com)  
+🐙 **GitHub:** [Yafar12](https://github.com/Yafar12)
+
+---
+
+© 2025 **Clinic Management System**  
+_Professional software engineering applied to healthcare_
+
