@@ -44,12 +44,17 @@ src/main/java/com/project/project/
 └── shared/                  # Módulos Transversales
     ├── config/              # Configuraciones de Bean y Swagger
     └── error/               # Manejo Global de Excepciones y Códigos de Error
-📌 Roadmap de Funcionalidades
+
+
+```
+📌 Entidades y Roadmap del Sistema
+El sistema está diseñado para escalar hacia una solución integral de salud:
+
 👥 Gestión Integral: Pacientes, Doctores y Personal Administrativo (Secretarios).
 
 📅 Agenda Inteligente: Sistema de turnos con validación de disponibilidad en tiempo real.
 
-🛑 Non-Working Days: Módulo avanzado para que médicos gestionen licencias, feriados y bloqueos horarios personalizados.
+🛑 Non-Working Days: Módulo avanzado para que médicos gestionen licencias, feriados y bloqueos horarios personalizados (Días libres y franjas horarias).
 
 📂 Historia Clínica Digital: Almacenamiento seguro de registros médicos y archivos adjuntos.
 
@@ -63,8 +68,8 @@ Maven 3.9+.
 
 PostgreSQL 17 activo.
 
-Base de Datos
-Actualiza src/main/resources/application.properties:
+Configuración de Base de Datos
+Actualiza tu archivo src/main/resources/application.properties:
 
 Properties
 
@@ -74,6 +79,7 @@ spring.datasource.password=postgres
 
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
+
 👤 Autor
 Alejandro Ahmad Futuro Ingeniero en Sistemas de Información
 
