@@ -73,7 +73,21 @@ graph TD
     Patient "1" -- "0..*" Appointment : requests
     Doctor "1" -- "0..*" NonWorkingDay : blocks
     
-🛠️ Stack TecnológicoCapaTecnologíasPropósitoBackendJava 17+, Spring Boot 3.4REST API & Application CorePersistenceJPA, Hibernate, PostgreSQL 17Integridad de datos relacionalesFrontendReact 18, ViteUI de alto rendimientoArchitectureHexagonal, Clean Architecture, DDDDiseño de nivel EnterpriseToolingMapStruct, Lombok, SwaggerProductividad y documentación🧱 Estructura del ProyectoPlaintextsrc/main/java/com/project/project/
+🚀 Tech Stack
+
+
+| Layer            | Technologies                       | Purpose                      |
+| ---------------- | ---------------------------------- | ---------------------------- |
+| **Backend**      | Java 17+, Spring Boot 3.4          | REST API & Application Core  |
+| **Persistence**  | JPA, Hibernate, PostgreSQL 17      | Relational data integrity    |
+| **Frontend**     | React 18, Vite                     | High-performance UI          |
+| **Architecture** | Hexagonal, Clean Architecture, DDD | Enterprise design            |
+| **Tooling**      | MapStruct, Lombok, Swagger         | Productivity & documentation |
+
+
+🧱 Project Structure (Hexagonal)
+
+
 ├── application/          # Casos de uso y orquestación
 │   ├── dto/              # Commands / Results
 │   ├── mapper/           # Mapeo Aplicación ↔ Dominio
