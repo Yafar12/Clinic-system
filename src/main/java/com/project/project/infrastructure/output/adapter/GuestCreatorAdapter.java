@@ -19,9 +19,14 @@ public class GuestCreatorAdapter implements GuestCreatorPort {
 
     @Override
     public Guest perform(Guest guest) {
+
+        String photoPath = null;
+
         GuestEntity entity = mapper.toEntity(guest);
-        entity.setPhotoPath(null);
+        entity.setPhotoPath(photoPath);
+
         GuestEntity savedEntity = repository.save(entity);
+
         return mapper.toDomain(savedEntity);
     }
 

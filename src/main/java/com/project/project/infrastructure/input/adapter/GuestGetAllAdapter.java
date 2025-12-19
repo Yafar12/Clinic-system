@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.project.application.GuestFindAll;
 import com.project.project.application.dto.GuestFindAllResult;
-import com.project.project.infrastructure.input.dto.GuestGetAllAdapterResponse;
-import com.project.project.infrastructure.input.mapper.GuestGetAllAdapterMapper;
+import com.project.project.infrastructure.input.dto.GuestGetAllResponse;
+import com.project.project.infrastructure.input.mapper.GuestGetAllMapper;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -19,15 +19,15 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class GuestGetAllAdapter {
 
     private final GuestFindAll guestFindAll;
-    private final GuestGetAllAdapterMapper mapper;
+    private final GuestGetAllMapper mapper;
 
-    public GuestGetAllAdapter(GuestFindAll guestFindAll, GuestGetAllAdapterMapper mapper) {
+    public GuestGetAllAdapter(GuestFindAll guestFindAll, GuestGetAllMapper mapper) {
         this.guestFindAll = guestFindAll;
         this.mapper = mapper;
     }
 
     @GetMapping("/guests")
-    public ResponseEntity<List<GuestGetAllAdapterResponse>> perform() {
+    public ResponseEntity<List<GuestGetAllResponse>> perform() {
         List<GuestFindAllResult> results = guestFindAll.perform();
         return ResponseEntity.ok(mapper.toResponse(results));
     }

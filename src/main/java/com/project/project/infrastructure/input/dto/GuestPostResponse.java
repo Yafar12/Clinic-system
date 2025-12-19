@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class GuestPostAdapterResponse {
+public class GuestPostResponse {
     private UUID id;
 }

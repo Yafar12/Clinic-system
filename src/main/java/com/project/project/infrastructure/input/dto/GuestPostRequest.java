@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GuestPostAdapterRequest {
+public class GuestPostRequest {
     private Integer dni;
     @JsonProperty("first_name")
     private String firstName;

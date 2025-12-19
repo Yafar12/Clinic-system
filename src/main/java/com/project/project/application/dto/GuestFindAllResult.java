@@ -11,5 +11,4 @@ public class GuestFindAllResult {
     private Integer dni;
     private String firstName;
     private String lastName;
-
 }
